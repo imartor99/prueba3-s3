@@ -83,3 +83,4 @@ jobs:
             --exclude "node_modules/*" \
             --exclude ".github/*"
             --exclude ".gitignore" 
+            --acl public-read
