@@ -1,12 +1,46 @@
 import { Book } from "./book.js";
 
+/**
+ * Clase que gestiona la colección de libros.
+ * Mantiene el estado de la lista y controla los punteros de lectura.
+ * @class
+ */
 export class BookList {
   constructor() {
+    /**
+     * Array que contiene todos los objetos Book en la lista.
+     * @type {Array<Book>}
+     */
     this.books = [];
+
+    /**
+     * Referencia al libro que se está leyendo actualmente.
+     * @type {Book|null}
+     */
     this.currentBook = null;
+
+    /**
+     * Referencia al siguiente libro no leído.
+     * @type {Book|null}
+     */
     this.nextBook = null;
+
+    /**
+     * Referencia al último libro que se terminó de leer.
+     * @type {Book|null}
+     */
     this.lastBook = null;
+
+    /**
+     * Contador de libros marcados como leídos.
+     * @type {number}
+     */
     this.readCount = 0;
+
+    /**
+     * Contador de libros aún no leídos.
+     * @type {number}
+     */
     this.notReadCount = 0;
   }
 
@@ -14,6 +48,7 @@ export class BookList {
    * Añade un libro a la lista.
    * Incrementa el contador de libros no leídos y actualiza los punteros
    * de libro actual y siguiente si es necesario.
+   * @memberof BookList
    * @param {Book} book - El objeto libro a añadir.
    */
   add(book) {
@@ -33,6 +68,7 @@ export class BookList {
    * Marca el libro actual como leído.
    * Establece la fecha de lectura, actualiza los contadores, mueve el libro actual
    * a último libro leído, y busca el siguiente libro no leído para establecerlo como actual.
+   * @memberof BookList
    */
   finishCurrentBook() {
     if (this.currentBook) {
