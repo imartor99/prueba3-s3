@@ -104,3 +104,10 @@ git push origin main
 
 
 ```
+
+#### Poner tag al final
+
+```bash
+git tag -a v1.0.0 -m "Versión final del CI/CD funcional con despliegue a S3 y JSDoc OK."
+git push origin v1.0.0
+```
