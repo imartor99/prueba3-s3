@@ -112,3 +112,46 @@ git tag -a v1.0.0 -m "Versión final del CI/CD funcional con despliegue a S3 y J
 git push origin v1.0.0
 git push origin --tags // para subir todos los tags
 ``` 
+
+#### Despliegue en pages
+  deploy:
+    name: 🚀 Despliegue a GitHub Pages (CD)
+    runs-on: ubuntu-latest
+    needs: [test, docs] # Se ejecuta solo si tests y docs pasan
+
+    # --- Permisos de Acceso CLAVE ---
+    permissions:
+      contents: read
+      pages: write  # Necesario para escribir en GitHub Pages
+      id-token: write # Necesario para la autenticación
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Necesitamos una copia limpia para construir el artefacto de despliegue
+          submodules: true
+      
+      # --- 1. Recuperar la Documentación (Artifact) ---
+      - name: Download JSDoc documentation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: jsdoc-documentation
+          # La descarga pone la carpeta 'docs' en la raíz del runner
+          path: ./docs 
+
+      # --- 2. Preparar el Contenido para Despliegue ---
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # --- 3. Crear el Artefacto de Despliegue de Pages ---
+      - name: Build Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Copia todo el contenido del repositorio (incluida la carpeta 'docs' descargada)
+          path: '.' 
+
+      # --- 4. Desplegar a GitHub Pages ---
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
