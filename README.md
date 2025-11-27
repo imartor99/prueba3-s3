@@ -91,3 +91,16 @@ deploy:
           --exclude "node_modules/*" \
           --exclude ".github/*"
 ```
+
+#### Mergear cuando ya este todo develop en main
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout main
+git pull origin main
+git merge develop
+git push origin main
+
+
+```
